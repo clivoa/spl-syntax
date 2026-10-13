@@ -1,0 +1,12 @@
+```Processes spawned by Office applications over the last week```
+| tstats summariesonly=true count earliest(_time) AS first_seen
+    FROM datamodel=Endpoint.Processes
+    WHERE earliest=-7d@d Processes.parent_process_name IN ("winword.exe", "excel.exe")
+    BY Processes.dest, Processes.user, Processes.process
+| `drop_dm_object_name(Processes)`
+| rex field=process "(?<child_image>[^\\\\]+)$"
+| search [ search index=main sourcetype=asset_inventory tier=crown_jewel | fields dest ]
+| lookup user_roles user OUTPUT role
+| eval first_seen=strftime(first_seen, "%F %T")
+| table dest, user, role, child_image, count, first_seen
+| sort - count

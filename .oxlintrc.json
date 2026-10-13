@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "rules": {
+    "no-useless-escape": "warn",
+    "no-restricted-globals": [
+      "warn",
+      {
+        "name": "globalThis",
+        "message": "Use 'window' or 'activeWindow' for Obsidian popout window compatibility."
+      }
+    ]
+  }
+}

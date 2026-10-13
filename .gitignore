@@ -1,0 +1,8 @@
+.worktrees/
+docs/
+.DS_Store
+node_modules/
+.obsidian/
+coverage/
+main.js
+main.js.map

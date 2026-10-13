@@ -1,0 +1,5 @@
+index=main sourcetype=access_combined earliest=-7d@d
+| eval failed=if(status>=400, 1, 0)
+| timechart span=1h sum(failed) AS failures, count AS requests
+| eval failure_rate=round(failures / requests * 100, 2)
+| rename failure_rate AS "Failure rate (%)"

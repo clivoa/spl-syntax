@@ -1,0 +1,4 @@
+index=main sourcetype=access_combined status>=400
+| stats count AS errors BY status, host
+| sort - errors
+| head 20
